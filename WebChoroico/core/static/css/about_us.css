@@ -1,0 +1,90 @@
+:root {
+    --sidebar-width: 260px;
+    --primary-color: #4e73df;
+    --dark-bg: #1a1c23;
+}
+
+body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background-color: #f8f9fc;
+    display: flex;
+}
+
+/* BARRA LATERAL (La Interfaz) */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--dark-bg);
+    color: white;
+    position: fixed;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu-items {
+    list-style: none;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.menu-items li {
+    margin-bottom: 5px;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: #a0aec0;
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.menu-link i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Efecto Hover y Activo */
+.menu-link:hover,
+.menu-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.menu-link:hover i {
+    color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: 100%;
+    padding: 40px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.icon-header {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}

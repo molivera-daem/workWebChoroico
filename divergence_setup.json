@@ -1,0 +1,33 @@
+{
+  "asset": "BTCUSDT",
+  "direction": "LONG",
+  "strategy": "Bullish_Divergence_1H",
+  "data_timestamp": "2026-03-26T15:20:00Z",
+  "trigger_price": 68500,
+  "entries": [
+    {
+      "type": "market",
+      "price": 68500,
+      "allocation_pct": 50
+    },
+    {
+      "type": "limit",
+      "price": 67800,
+      "allocation_pct": 50
+    }
+  ],
+  "stop_loss": 66750,
+  "take_profits": [
+    {
+      "price": 69700,
+      "closing_pct": 50
+    },
+    {
+      "price": 70500,
+      "closing_pct": 50
+    }
+  ],
+  "leverage": 3,
+  "risk_pct": 2.0,
+  "status": "pending_confirmation"
+}

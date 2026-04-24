@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/auro051cl/repositories/WebChoroico/
+    # Copiar archivos desde el repositorio (donde cPanel hace pull) a la carpeta de la app si son distintas
+    # Si son la misma carpeta, este paso copia sobre sí mismo (redundante pero seguro en algunos setups)
+    - /bin/cp -R * $DEPLOYPATH
+    # Tocar el archivo WSGI para reiniciar la app Python (Passenger)
+    - /bin/touch $DEPLOYPATH/passenger_wsgi.py

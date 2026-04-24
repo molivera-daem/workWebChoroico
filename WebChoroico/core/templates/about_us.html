@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Sobre Nosotros - Escuela Aurora de Chile{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container hero-content">
+        <h1>Sobre Nosotros</h1>
+        <p>Conoce la historia, misión y valores que guían nuestra labor educativa en Choroico.</p>
+    </div>
+</section>
+
+<!-- Identity Section -->
+<section class="identity-section">
+    <div class="container identity-grid">
+        <div class="identity-card">
+            <div class="icon-box"><i class="fas fa-bullseye"></i></div>
+            <h3>Misión</h3>
+            <p>Brindar una educación integral y de calidad que permita a nuestros estudiantes desarrollar sus
+                habilidades académicas, sociales y valóricas, preparándolos para ser ciudadanos responsables y
+                comprometidos con su entorno.</p>
+        </div>
+        <div class="identity-card">
+            <div class="icon-box"><i class="fas fa-eye"></i></div>
+            <h3>Visión</h3>
+            <p>Ser reconocidos como una institución líder en excelencia académica y formación humana en la región,
+                inspirando a las nuevas generaciones a alcanzar su máximo potencial a través de la innovación y el
+                respeto.</p>
+        </div>
+        <div class="identity-card">
+            <div class="icon-box"><i class="fas fa-hands-helping"></i></div>
+            <h3>Valores</h3>
+            <p>Fomentamos el respeto, la responsabilidad, la solidaridad y la honestidad como pilares fundamentales del
+                crecimiento personal y la convivencia armónica de nuestra comunidad escolar.</p>
+        </div>
+    </div>
+</section>
+
+<!-- History Section -->
+<section class="history-section bg-light">
+    <div class="container history-flex">
+        <div class="history-content">
+            <div class="section-header text-left">
+                <h2>Nuestra Historia</h2>
+                <div class="underline-left"></div>
+            </div>
+            <p>La Escuela Aurora de Chile nació con el sueño de llevar educación y esperanza a la comunidad de Choroico.
+                Desde sus humildes comienzos, ha crecido junto a sus familias, transformándose en un pilar fundamental
+                del desarrollo local.</p>
+            <p>A lo largo de las décadas, hemos formado a generaciones de estudiantes que hoy contribuyen al progreso de
+                nuestra sociedad, manteniendo siempre vivo el espíritu de superación y el amor por nuestra tierra.</p>
+        </div>
+        <div class="history-image">
+            <img src="{{ url_for('static', filename='img/branch/historia_escuela_aurora.jpg') }}"
+                alt="Historia Escuela Aurora de Chile" class="img-responsive-shadow">
+        </div>
+    </div>
+</section>
+
+<!-- Location & Contact Section -->
+<section class="location-section">
+    <div class="container location-grid">
+        <div class="location-info">
+            <div class="section-header text-left">
+                <h2>¿Dónde Estamos?</h2>
+                <div class="underline-left"></div>
+            </div>
+            <p>Te invitamos a visitarnos y conocer nuestras instalaciones. Estamos ubicados en un entorno tranquilo y
+                propicio para el aprendizaje.</p>
+
+            <div class="contact-details-list">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Dirección</strong>
+                        <p>Camino Real 123, Choroico, Chile.</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <strong>Teléfono</strong>
+                        <p>+56 45 2 123456</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong>
+                        <p>secretaria@escuelaaurora.cl</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="map-wrap">
+            <div class="map-container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.969129565326!2d-72.29177855155469!3d-39.00082337036768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x961494f27baf14d9%3A0xc420698daa4e3bcd!2sEscuela%20Aurora%20De%20Chile%2C%20Choroico!5e1!3m2!1ses-419!2scl!4v1767121643903!5m2!1ses-419!2scl"
+                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

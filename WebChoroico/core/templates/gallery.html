@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Galería - Escuela Aurora de Chile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="gallery-section">
+    <div class="container">
+        <div class="gallery-header">
+            <h2>Nuestra Galería</h2>
+            <p>Un recorrido visual por las actividades, infraestructura y momentos especiales de nuestra escuela.</p>
+        </div>
+
+        <div class="gallery-grid">
+            {% for photo in photos %}
+            <div class="gallery-item" onclick="openLightbox({{ loop.index0 }})">
+                <img src="{{ photo.image_url }}" alt="{{ photo.title }}">
+                <div class="gallery-overlay">
+                    <span>{{ photo.category }}</span>
+                    <h3>{{ photo.title }}</h3>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                <p>La galería se encuentra vacía en este momento.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox-modal">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+
+    <button class="lightbox-btn lightbox-prev" onclick="changePhoto(-1)">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <button class="lightbox-btn lightbox-next" onclick="changePhoto(1)">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <div class="lightbox-content">
+        <img id="lightbox-img" class="lightbox-img" src="" alt="">
+        <div class="lightbox-caption">
+            <h4 id="lightbox-title"></h4>
+            <p id="lightbox-desc"></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const photos = {{ photos| tojson }};
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox();
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden'; // Evitar scroll al ver fotos
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function changePhoto(step) {
+        currentIndex += step;
+        if (currentIndex < 0) currentIndex = photos.length - 1;
+        if (currentIndex >= photos.length) currentIndex = 0;
+        updateLightbox();
+    }
+
+    function updateLightbox() {
+        const photo = photos[currentIndex];
+        const img = document.getElementById('lightbox-img');
+        const title = document.getElementById('lightbox-title');
+        const desc = document.getElementById('lightbox-desc');
+
+        // Animación suave al cambiar
+        img.style.opacity = '0';
+        setTimeout(() => {
+            img.src = photo.image_url;
+            title.innerText = photo.title;
+            desc.innerText = photo.description || '';
+            img.style.opacity = '1';
+        }, 200);
+    }
+
+    // Cerrar con escape o haciendo clic fuera de la imagen
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') changePhoto(1);
+        if (e.key === 'ArrowLeft') changePhoto(-1);
+    });
+
+    document.getElementById('lightbox').onclick = function (e) {
+        if (e.target.id === 'lightbox') closeLightbox();
+    };
+</script>
+{% endblock %}

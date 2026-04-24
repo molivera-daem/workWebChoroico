@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Vercel
+.vercel/
+
+# Logs
+*.log
+app_startup.log
+app_run.log
+flask.log

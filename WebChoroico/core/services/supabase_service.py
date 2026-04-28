@@ -1,4 +1,4 @@
-from WebChoroico.core.database.supabase_client import get_supabase_client
+from ..database.supabase_client import get_supabase_client
 
 class SupabaseService:
     def __init__(self):

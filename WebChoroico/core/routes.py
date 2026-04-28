@@ -5,7 +5,7 @@
 """
 
 from flask import Blueprint, render_template
-from WebChoroico.core.services.supabase_service import SupabaseService
+from .services.supabase_service import SupabaseService
 
 main = Blueprint('main', __name__)
 supabase_service = SupabaseService()
@@ -45,7 +45,6 @@ def gallery():
     Muestra una galería fotográfica institucional con datos de Supabase.
     """
     # TSK-010: Obtención dinámica de galería desde Supabase
-    gallery_items = supabase_service.get_all_news() # Se usa get_gallery_items en realidad, corregiré en el servicio si es necesario
     gallery_items = supabase_service.get_gallery_items()
     return render_template('gallery.html', section="Galería", icon="fa-images", photos=gallery_items)
 

@@ -16,7 +16,7 @@
 
         <div class="gallery-grid">
             {% for photo in photos %}
-            <div class="gallery-item" onclick="openLightbox({{ loop.index0 }})">
+            <div class="gallery-item" onclick="openLightbox(parseInt('{{ loop.index0 }}'))">
                 <img src="{{ photo.image_url }}" alt="{{ photo.title }}">
                 <div class="gallery-overlay">
                     <span>{{ photo.category }}</span>
@@ -55,12 +55,15 @@
 {% endblock %}
 
 {% block extra_js %}
+<script id="gallery-data" type="application/json">
+    {{ photos | tojson | safe }}
+</script>
+
 <script>
-    const photos = {{ photos| tojson }};
+    const galleryPhotos = JSON.parse(document.getElementById('gallery-data').textContent);
     let currentIndex = 0;
 
     function openLightbox(index) {
-        1
         currentIndex = index;
         updateLightbox();
         document.getElementById('lightbox').classList.add('active');
@@ -74,13 +77,13 @@
 
     function changePhoto(step) {
         currentIndex += step;
-        if (currentIndex < 0) currentIndex = photos.length - 1;
-        if (currentIndex >= photos.length) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = galleryPhotos.length - 1;
+        if (currentIndex >= galleryPhotos.length) currentIndex = 0;
         updateLightbox();
     }
 
     function updateLightbox() {
-        const photo = photos[currentIndex];
+        const photo = galleryPhotos[currentIndex];
         const img = document.getElementById('lightbox-img');
         const title = document.getElementById('lightbox-title');
         const desc = document.getElementById('lightbox-desc');

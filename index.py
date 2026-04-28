@@ -1,20 +1,20 @@
 import os
 import sys
 
-# Agregar el directorio WebChoroico al path para que las importaciones funcionen correctamente
+# Agregar el directorio WebChoroico al path para que las importaciones funcionen
 path = os.path.dirname(os.path.abspath(__file__))
 web_choroico_path = os.path.join(path, 'WebChoroico')
 if web_choroico_path not in sys.path:
-    sys.path.append(web_choroico_path)
+    sys.path.insert(0, web_choroico_path)
 
-# Importar la aplicación Flask desde app.py dentro de WebChoroico
-# En WebChoroico/app.py tenemos: app = create_app(ProductionConfig)
+# Importar la instancia de Flask
 try:
     from app import app
 except ImportError:
-    # Intento alternativo si el anterior falla en ciertos entornos
     from WebChoroico.app import app
 
-# Vercel usará el objeto 'app'
+# Esto es lo que Vercel necesita encontrar
+application = app
+
 if __name__ == "__main__":
     app.run()

@@ -1,1 +1,0 @@
-CONEXIÓN ACTIVA: v1.2 - El despliegue de Vercel está funcionando correctamente.

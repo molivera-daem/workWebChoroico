@@ -36,6 +36,26 @@ class SupabaseService:
             print(f"Error al crear noticia: {e}")
             return None
 
+    def list_files(self, bucket_name: str, path: str):
+        """Lista los archivos en un bucket y path específicos."""
+        try:
+            return self.client.storage.from_(bucket_name).list(path)
+        except Exception as e:
+            print(f"Error al listar archivos en {bucket_name}/{path}: {e}")
+            return []
+
+    def get_public_url(self, bucket_name: str, file_path: str):
+        """Obtiene la URL pública de un archivo."""
+        try:
+            res = self.client.storage.from_(bucket_name).get_public_url(file_path)
+            # El cliente de python de supabase a veces retorna un string o un objeto con la url
+            if isinstance(res, str):
+                return res
+            return res.get('publicURL') or res # Ajuste según versión de la librería
+        except Exception as e:
+            print(f"Error al obtener URL pública: {e}")
+            return None
+
     def upload_file(self, bucket_name: str, file_path: str, destination_path: str):
         """Sube un archivo al Storage y retorna su URL pública."""
         try:

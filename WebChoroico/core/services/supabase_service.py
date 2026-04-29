@@ -22,6 +22,20 @@ class SupabaseService:
             print(f"Error al obtener galería: {e}")
             return []
 
+    def create_news_item(self, title, content, image_url):
+        """Crea una nueva noticia en la tabla news."""
+        try:
+            data = {
+                "title": title,
+                "content": content,
+                "image_url": image_url
+            }
+            response = self.client.table("news").insert(data).execute()
+            return response.data
+        except Exception as e:
+            print(f"Error al crear noticia: {e}")
+            return None
+
     def upload_file(self, bucket_name: str, file_path: str, destination_path: str):
         """Sube un archivo al Storage y retorna su URL pública."""
         try:

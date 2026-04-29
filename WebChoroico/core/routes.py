@@ -13,10 +13,16 @@ supabase_service = SupabaseService()
 @main.route('/debug-status')
 def debug_status():
     """Ruta para verificar la versión del despliegue y conexión."""
+    import os
+    from .services.supabase_service import SupabaseService
+    svc = SupabaseService()
+    news_count = len(svc.get_all_news())
     return {
         "status": "online",
-        "version": "1.2",
-        "message": "Si ves esto, el código de Vercel está actualizado."
+        "version": "1.4",
+        "news_found": news_count,
+        "supabase_url_start": os.environ.get("SUPABASE_URL")[:10] if os.environ.get("SUPABASE_URL") else "MISSING",
+        "message": "Si news_found es 0, las llaves de Vercel están mal o apuntan a otro lado."
     }
 
 @main.route('/')

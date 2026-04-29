@@ -19,9 +19,9 @@ def debug_status():
     news_count = len(svc.get_all_news())
     return {
         "status": "online",
-        "version": "1.4",
+        "version": "1.5",
         "news_found": news_count,
-        "supabase_url_start": os.environ.get("SUPABASE_URL")[:10] if os.environ.get("SUPABASE_URL") else "MISSING",
+        "supabase_url_start": os.environ.get("SUPABASE_URL")[:15] if os.environ.get("SUPABASE_URL") else "MISSING",
         "message": "Si news_found es 0, las llaves de Vercel están mal o apuntan a otro lado."
     }
 

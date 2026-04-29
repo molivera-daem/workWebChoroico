@@ -26,13 +26,15 @@ def debug_status():
     except Exception as e:
         error_msg = str(e)
 
+    url = os.environ.get("SUPABASE_URL", "")
     return {
         "status": "online",
-        "version": "1.6",
+        "version": "1.7",
         "news_found": news_count,
         "supabase_error": error_msg,
-        "supabase_url": os.environ.get("SUPABASE_URL")[:20] if os.environ.get("SUPABASE_URL") else "MISSING",
-        "message": "Si news_found es 0 y no hay error, es 100% un tema de RLS o llaves cruzadas."
+        "url_full_check": f"{url[:10]}...{url[-10:]}" if url else "MISSING",
+        "url_length": len(url),
+        "message": "Si url_full_check termina en '/', ahí está el error."
     }
 
 @main.route('/')

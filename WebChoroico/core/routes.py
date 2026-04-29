@@ -16,13 +16,23 @@ def debug_status():
     import os
     from .services.supabase_service import SupabaseService
     svc = SupabaseService()
-    news_count = len(svc.get_all_news())
+    
+    # Intentamos obtener noticias y capturar el error si existe
+    error_msg = None
+    news_count = 0
+    try:
+        response = svc.client.table("news").select("*").execute()
+        news_count = len(response.data)
+    except Exception as e:
+        error_msg = str(e)
+
     return {
         "status": "online",
-        "version": "1.5",
+        "version": "1.6",
         "news_found": news_count,
-        "supabase_url_start": os.environ.get("SUPABASE_URL")[:15] if os.environ.get("SUPABASE_URL") else "MISSING",
-        "message": "Si news_found es 0, las llaves de Vercel están mal o apuntan a otro lado."
+        "supabase_error": error_msg,
+        "supabase_url": os.environ.get("SUPABASE_URL")[:20] if os.environ.get("SUPABASE_URL") else "MISSING",
+        "message": "Si news_found es 0 y no hay error, es 100% un tema de RLS o llaves cruzadas."
     }
 
 @main.route('/')

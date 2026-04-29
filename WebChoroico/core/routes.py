@@ -10,6 +10,15 @@ from .services.supabase_service import SupabaseService
 main = Blueprint('main', __name__)
 supabase_service = SupabaseService()
 
+@main.route('/debug-status')
+def debug_status():
+    """Ruta para verificar la versión del despliegue y conexión."""
+    return {
+        "status": "online",
+        "version": "1.2",
+        "message": "Si ves esto, el código de Vercel está actualizado."
+    }
+
 @main.route('/')
 def home():
     """

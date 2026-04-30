@@ -10,33 +10,6 @@ from .services.supabase_service import SupabaseService
 main = Blueprint('main', __name__)
 supabase_service = SupabaseService()
 
-@main.route('/debug-status')
-def debug_status():
-    """Ruta para verificar la versión del despliegue y conexión."""
-    import os
-    from .services.supabase_service import SupabaseService
-    svc = SupabaseService()
-    
-    # Intentamos obtener noticias y capturar el error si existe
-    error_msg = None
-    news_count = 0
-    try:
-        response = svc.client.table("news").select("*").execute()
-        news_count = len(response.data)
-    except Exception as e:
-        error_msg = str(e)
-
-    url = os.environ.get("SUPABASE_URL", "")
-    return {
-        "status": "online",
-        "version": "1.7",
-        "news_found": news_count,
-        "supabase_error": error_msg,
-        "url_full_check": f"{url[:10]}...{url[-10:]}" if url else "MISSING",
-        "url_length": len(url),
-        "message": "Si url_full_check termina en '/', ahí está el error."
-    }
-
 @main.route('/')
 def home():
     """

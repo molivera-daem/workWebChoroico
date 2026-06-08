@@ -1,8 +1,9 @@
 # Ticket: Mejoras Visuales y Funcionales Integrales
 
 **Ticket:** TSK-011
-**Estado:** En Proceso (Análisis de Roles)
+**Estado:** Completado
 **Fecha de Inicio:** 2026-04-28
+**Fecha de Finalización:** 2026-06-08
 
 ---
 
@@ -91,3 +92,30 @@ La web actual es funcional pero se siente "plana" y básica. Falta interactivida
 *   `WebChoroico/core/templates/index.html`
 *   `WebChoroico/core/templates/news.html`
 *   `WebChoroico/core/templates/gallery.html`
+
+---
+
+## 👨‍💻 Desarrollador Senior
+
+**Implementación Realizada:**
+
+1. **Diseño Visual Cohesivo y Tipografía:**
+   - Implementación de variables CSS en `style.css` para colores institucionales, fuentes modernas (Inter/Roboto), espaciados, bordes redondeados y sombras suaves.
+   - Creación de hojas de estilo dedicadas para secciones específicas (`news.css`, `gallery.css`, `staff.css`) con estados de hover animados y transiciones suaves de 0.3s.
+
+2. **Rediseño e Integración Dinámica de la Home (`index.html`):**
+   - Incorporación de un Hero banner institucional dinámico.
+   - Preview automatizado de las últimas noticias obtenidas en tiempo real desde Supabase.
+
+3. **Optimización de la Galería y Álbumes:**
+   - Modificación de la ruta `/gallery` para agrupar fotos por categorías/álbumes de forma normalizada (eliminando acentos, caracteres especiales y mayúsculas).
+   - Filtrado automático de logos institucionales y placeholders de las portadas de los álbumes.
+   - Creación de la vista de detalle de cada álbum (`gallery_album.html`) para visualizar todas las fotos de una actividad mediante una cuadrícula moderna y responsiva.
+
+4. **Sistema de Noticias Optimizado:**
+   - Vista de detalle de noticias (`news_detail.html`) que carga dinámicamente imágenes de su carpeta en Supabase Storage (assets bucket) para noticias específicas (como Color Run).
+   - Exclusión de IDs de noticias específicas no deseadas o con problemas de visibilidad en el frontend.
+
+5. **Nueva Sección del Personal/Funcionarios (`staff.html`):**
+   - Creación del modelo local de personal en `models.py` que actúa como fallback seguro si falla la consulta de Supabase.
+   - Renderización dinámica y estilizada de tarjetas del personal directivo, docente y de soporte.

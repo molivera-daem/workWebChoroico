@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Nuestro Personal - Escuela Aurora de Chile{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/staff.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="staff-section">
+    <div class="container">
+        <div class="staff-header">
+            <span class="pre-title">Comunidad Educativa</span>
+            <h2>Nuestro Personal</h2>
+            <div class="underline" style="margin: 0 auto;"></div>
+            <p>Conoce al equipo de profesionales comprometidos con la excelencia educativa y el bienestar de nuestros estudiantes.</p>
+        </div>
+
+        <div class="staff-grid">
+            {% for member in staff %}
+            <div class="staff-card">
+                <div class="staff-image-wrap">
+                    <img src="{{ member.image_url or url_for('static', filename='img/placeholder.jpg') }}" 
+                         alt="{{ member.name }}">
+                </div>
+                <div class="staff-info">
+                    <span class="staff-role">{{ member.role }}</span>
+                    <h3>{{ member.name }}</h3>
+                    <a href="mailto:{{ member.email }}" class="staff-email">
+                        <i class="fas fa-envelope"></i> {{ member.email }}
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                <p>La información del personal se está actualizando. Por favor, vuelve más tarde.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

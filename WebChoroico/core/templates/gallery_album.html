@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category }} - Galería Escuela Aurora{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+<style>
+    .album-detail-header {
+        margin-bottom: 40px;
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #666;
+        text-decoration: none;
+        margin-bottom: 20px;
+        transition: 0.3s;
+    }
+
+    .btn-back:hover {
+        color: var(--primary-color);
+    }
+
+    .album-title-wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 15px;
+    }
+
+    .album-title-wrap h2 {
+        margin: 0;
+        text-transform: uppercase;
+        color: #1a3a5f;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="gallery-section">
+    <div class="container">
+        <div class="album-detail-header">
+            <a href="{{ url_for('main.gallery') }}" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Volver a la galería principal
+            </a>
+            <div class="album-title-wrap">
+                <h2>{{ category }}</h2>
+                <span class="category-count">{{ photos|length }} fotografías</span>
+            </div>
+        </div>
+
+        <div class="gallery-grid">
+            {% for photo in photos %}
+            <div class="gallery-item" onclick="openLightbox({{ loop.index0 }})">
+                <img src="{{ photo.image_url }}" alt="{{ photo.title or '' }}">
+                <div class="gallery-overlay">
+                    <h3>{{ photo.title or 'Ver fotografía' }}</h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox-modal">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+
+    <button class="lightbox-btn lightbox-prev" onclick="changePhoto(-1)" aria-label="Anterior">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <button class="lightbox-btn lightbox-next" onclick="changePhoto(1)" aria-label="Siguiente">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <div class="lightbox-content">
+        <img id="lightbox-img" class="lightbox-img" src="" alt="">
+        <div class="lightbox-caption">
+            <h4 id="lightbox-title"></h4>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script id="gallery-data" type="application/json">
+    {{ photos | tojson | safe }}
+</script>
+
+<script>
+    const galleryDataElement = document.getElementById('gallery-data');
+    const galleryPhotos = galleryDataElement ? JSON.parse(galleryDataElement.textContent) : [];
+    let currentIndex = 0;
+    let fadeTimeout;
+
+    function openLightbox(index) {
+        if (!galleryPhotos || galleryPhotos.length === 0) return;
+        currentIndex = index;
+        updateLightbox();
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function changePhoto(step) {
+        if (!document.getElementById('lightbox').classList.contains('active')) return;
+
+        currentIndex += step;
+        if (currentIndex < 0) currentIndex = galleryPhotos.length - 1;
+        if (currentIndex >= galleryPhotos.length) currentIndex = 0;
+        updateLightbox();
+    }
+
+    function updateLightbox() {
+        const photo = galleryPhotos[currentIndex];
+        if (!photo) return;
+
+        const img = document.getElementById('lightbox-img');
+        const title = document.getElementById('lightbox-title');
+
+        if (fadeTimeout) clearTimeout(fadeTimeout);
+
+        img.style.opacity = '0';
+        fadeTimeout = setTimeout(() => {
+            img.src = photo.image_url;
+            img.alt = photo.title || '';
+            title.innerText = photo.title || '';
+            img.style.opacity = '1';
+        }, 200);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (!document.getElementById('lightbox').classList.contains('active')) return;
+
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') changePhoto(1);
+        if (e.key === 'ArrowLeft') changePhoto(-1);
+    });
+</script>
+{% endblock %}

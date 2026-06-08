@@ -12,4 +12,5 @@ app = create_app(DevelopmentConfig)
 if __name__ == '__main__':
     # Usamos puerto 5002 para evitar conflictos con AirPlay en macOS (que usa el 5001)
     # Escuchamos en 0.0.0.0 para asegurar visibilidad
-    app.run(host='0.0.0.0', port=5002)
+    app.run(host='0.0.0.0', port=5002, use_reloader=False)
+

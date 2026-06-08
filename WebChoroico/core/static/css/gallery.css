@@ -33,18 +33,46 @@
     border-radius: 2px;
 }
 
+/* --- Category Grouping Styles --- */
+.gallery-category-group {
+    margin-bottom: 80px;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 10px;
+}
+
+.category-title {
+    font-size: 1.8rem;
+    color: #1a3a5f;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.category-count {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .gallery-item {
     position: relative;
     border-radius: 15px;
     overflow: hidden;
-    height: 300px;
+    height: 250px;
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.4s ease;
@@ -82,26 +110,14 @@
     opacity: 1;
 }
 
-.gallery-overlay span {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s ease 0.1s;
-}
-
 .gallery-overlay h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 0;
     opacity: 0;
     transform: translateY(10px);
     transition: all 0.4s ease 0.2s;
 }
 
-.gallery-item:hover .gallery-overlay span,
 .gallery-item:hover .gallery-overlay h3 {
     opacity: 1;
     transform: translateY(0);
@@ -154,11 +170,6 @@
     margin-bottom: 5px;
 }
 
-.lightbox-caption p {
-    font-size: 1rem;
-    opacity: 0.8;
-}
-
 /* Lightbox Controls */
 .lightbox-close {
     position: absolute;
@@ -206,9 +217,19 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .category-title {
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+    }
+
     .gallery-grid {
         grid-template-columns: 1fr;
-        padding: 0 15px;
+        padding: 0 5px;
     }
 
     .lightbox-btn {

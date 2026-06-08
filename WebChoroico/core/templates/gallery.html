@@ -1,28 +1,87 @@
 {% extends "base.html" %}
 
-{% block title %}Galería - Escuela Aurora de Chile{% endblock %}
+{% block title %}Galería de Actividades - Escuela Aurora de Chile{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+<style>
+    .album-card {
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-decoration: none;
+        display: block;
+        border: 1px solid #eee;
+    }
+    .album-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .album-cover {
+        height: 250px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    .album-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .album-info {
+        padding: 20px;
+        text-align: center;
+    }
+    .album-info h3 {
+        margin: 0;
+        color: #1a3a5f;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+    .album-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 86, 179, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: 0.3s;
+    }
+    .album-card:hover .album-overlay { opacity: 1; }
+    .album-overlay i { color: white; font-size: 3rem; }
+</style>
 {% endblock %}
 
 {% block content %}
 <section class="gallery-section">
     <div class="container">
         <div class="gallery-header">
-            <h2>Nuestra Galería</h2>
-            <p>Un recorrido visual por las actividades, infraestructura y momentos especiales de nuestra escuela.</p>
+            <span class="pre-title">Nuestros Momentos</span>
+            <h2>Galería de Actividades</h2>
+            <div class="underline" style="margin: 0 auto;"></div>
+            <p>Selecciona una actividad para ver todas las fotografías del evento.</p>
         </div>
 
         <div class="gallery-grid">
-            {% for photo in photos %}
-            <div class="gallery-item" onclick="openLightbox(parseInt('{{ loop.index0 }}'))">
-                <img src="{{ photo.image_url }}" alt="{{ photo.title }}">
-                <div class="gallery-overlay">
-                    <span>{{ photo.category }}</span>
-                    <h3>{{ photo.title }}</h3>
+            {% for category_norm, cover in albums.items() %}
+            <a href="{{ url_for('main.gallery_album', category=category_norm) }}" class="album-card">
+                <div class="album-cover">
+                    <img src="{{ cover.image_url or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ cover.display_category }}">
+                    <div class="album-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
                 </div>
-            </div>
+                <div class="album-info">
+                    <h3>{{ cover.display_category }}</h3>
+                </div>
+            </a>
             {% else %}
             <div class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 3rem;">
                 <p>La galería se encuentra vacía en este momento.</p>
@@ -31,82 +90,4 @@
         </div>
     </div>
 </section>
-
-<!-- Lightbox Modal -->
-<div id="lightbox" class="lightbox-modal">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-
-    <button class="lightbox-btn lightbox-prev" onclick="changePhoto(-1)">
-        <i class="fas fa-chevron-left"></i>
-    </button>
-
-    <button class="lightbox-btn lightbox-next" onclick="changePhoto(1)">
-        <i class="fas fa-chevron-right"></i>
-    </button>
-
-    <div class="lightbox-content">
-        <img id="lightbox-img" class="lightbox-img" src="" alt="">
-        <div class="lightbox-caption">
-            <h4 id="lightbox-title"></h4>
-            <p id="lightbox-desc"></p>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block extra_js %}
-<script id="gallery-data" type="application/json">
-    {{ photos | tojson | safe }}
-</script>
-
-<script>
-    const galleryPhotos = JSON.parse(document.getElementById('gallery-data').textContent);
-    let currentIndex = 0;
-
-    function openLightbox(index) {
-        currentIndex = index;
-        updateLightbox();
-        document.getElementById('lightbox').classList.add('active');
-        document.body.style.overflow = 'hidden'; // Evitar scroll al ver fotos
-    }
-
-    function closeLightbox() {
-        document.getElementById('lightbox').classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-
-    function changePhoto(step) {
-        currentIndex += step;
-        if (currentIndex < 0) currentIndex = galleryPhotos.length - 1;
-        if (currentIndex >= galleryPhotos.length) currentIndex = 0;
-        updateLightbox();
-    }
-
-    function updateLightbox() {
-        const photo = galleryPhotos[currentIndex];
-        const img = document.getElementById('lightbox-img');
-        const title = document.getElementById('lightbox-title');
-        const desc = document.getElementById('lightbox-desc');
-
-        // Animación suave al cambiar
-        img.style.opacity = '0';
-        setTimeout(() => {
-            img.src = photo.image_url;
-            title.innerText = photo.title;
-            desc.innerText = photo.description || '';
-            img.style.opacity = '1';
-        }, 200);
-    }
-
-    // Cerrar con escape o haciendo clic fuera de la imagen
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowRight') changePhoto(1);
-        if (e.key === 'ArrowLeft') changePhoto(-1);
-    });
-
-    document.getElementById('lightbox').onclick = function (e) {
-        if (e.target.id === 'lightbox') closeLightbox();
-    };
-</script>
 {% endblock %}

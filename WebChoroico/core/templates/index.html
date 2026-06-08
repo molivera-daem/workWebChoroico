@@ -6,8 +6,13 @@
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container hero-content">
-        <h1>Bienvenidos a la Escuela Aurora de Chile</h1>
-        <p>Educación de calidad con valores, formando el futuro de nuestra comunidad en Choroico.</p>
+        <div class="hero-badge">Establecimiento Educacional</div>
+        <h1>Bienvenidos a la <br><span class="text-accent">Escuela Aurora de Chile</span></h1>
+        <p>Educación de calidad con valores, formando el futuro de nuestra comunidad en Choroico con compromiso y excelencia académica.</p>
+        <div class="hero-btns">
+            <a href="{{ url_for('main.about_us') }}" class="btn-primary">Conócenos</a>
+            <a href="https://www.sistemadeadmisionescolar.cl/" class="btn-secondary" target="_blank">Admisión 2025</a>
+        </div>
     </div>
 </section>
 
@@ -15,124 +20,119 @@
 <section class="services-section">
     <div class="container">
         <div class="section-header">
+            <span class="pre-title">Gestión Escolar</span>
             <h2>Trámites y Servicios</h2>
             <div class="underline"></div>
         </div>
         <div class="services-grid">
             <div class="service-card">
-                <i class="fas fa-file-signature"></i>
-                <h3>Sistema de admisión escolar</h3>
-                <p>Proceso de admisión oficial para el próximo año académico.</p>
-                <a href="https://www.sistemadeadmisionescolar.cl/" class="btn-text" target="_blank">Ver más <i
-                        class="fas fa-arrow-right"></i></a>
+                <div class="service-icon-wrap">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+                <h3>Sistema de admisión</h3>
+                <p>Infórmate sobre el proceso oficial de postulación para el año académico.</p>
+                <a href="https://www.sistemadeadmisionescolar.cl/" class="btn-text" target="_blank">Postular aquí <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="service-card">
-                <i class="fas fa-file-pdf"></i>
-                <h3>Documentos</h3>
-                <p>Descarga el Reglamento Interno 2025 y otros documentos oficiales.</p>
-                <a href="{{ url_for('static', filename='documents/REGLAMENTO INTERNO 2025 - ESCUELA AURORA DE CHILE .pdf') }}"
-                    class="btn-text" target="_blank">Ver más <i class="fas fa-arrow-right"></i></a>
+                <div class="service-icon-wrap">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h3>Reglamento Interno</h3>
+                <p>Consulta las normativas vigentes y el Reglamento Interno 2025 de nuestra escuela.</p>
+                <a href="{{ url_for('static', filename='documents/REGLAMENTO INTERNO 2025 - ESCUELA AURORA DE CHILE .pdf') }}" class="btn-text" target="_blank">Descargar PDF <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="service-card">
-                <i class="fas fa-book-reader"></i>
+                <div class="service-icon-wrap">
+                    <i class="fas fa-book-reader"></i>
+                </div>
                 <h3>Material Educativo</h3>
-                <p>Descarga guías, lecturas y materiales para tus clases.</p>
-                <a href="#" class="btn-text">Ver más <i class="fas fa-arrow-right"></i></a>
+                <p>Accede a guías y materiales pedagógicos compartidos por nuestros docentes.</p>
+                <a href="#" class="btn-text">Acceder <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="service-card">
-                <i class="fas fa-calendar-alt"></i>
+                <div class="service-icon-wrap">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
                 <h3>Calendario Escolar</h3>
-                <p>Mantente al día con las fechas de evaluaciones y eventos.</p>
-                <a href="#" class="btn-text">Ver más <i class="fas fa-arrow-right"></i></a>
+                <p>Revisa las fechas clave, vacaciones y eventos institucionales del año.</p>
+                <a href="#" class="btn-text">Ver fechas <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- News Section -->
-<section class="news-section">
+<!-- News Preview Section (Dynamic) -->
+<section class="news-preview">
     <div class="container">
         <div class="section-header">
+            <span class="pre-title">Actualidad</span>
             <h2>Últimas Noticias</h2>
             <div class="underline"></div>
         </div>
         <div class="news-grid">
-            <div class="news-card">
-                <div class="news-img"
-                    style="background-image: url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=2071&auto=format&fit=crop');">
+            {% for item in news[:3] %}
+            <article class="news-card">
+                <div class="news-card-image">
+                    <img src="{{ item.image_url or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ item.title }}">
                 </div>
-                <div class="news-body">
-                    <span class="news-date">Dic 28, 2024</span>
-                    <h3>Premiación Final de Año</h3>
-                    <p>Celebración de los logros académicos y deportivos de nuestros alumnos.</p>
-                    <a href="#" class="btn-link">Leer noticia</a>
+                <div class="news-card-content">
+                    <div class="meta-info">
+                        <span><i class="far fa-calendar-alt"></i> {{ item.created_at[:10] if item.created_at else 'Reciente' }}</span>
+                    </div>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.content[:100] }}...</p>
+                    <a href="{{ url_for('main.news_detail', news_id=item.id) }}" class="btn-link">Leer más <i class="fas fa-arrow-right"></i></a>
                 </div>
+            </article>
+            {% else %}
+            <div class="empty-state">
+                <p>Visita nuestra sección de noticias para ver las novedades.</p>
             </div>
-            <div class="news-card">
-                <div class="news-img"
-                    style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1932&auto=format&fit=crop');">
-                </div>
-                <div class="news-body">
-                    <span class="news-date">Dic 20, 2024</span>
-                    <h3>Escuela Abierta de Verano</h3>
-                    <p>Talleres gratuitos para niños y jóvenes durante el mes de enero.</p>
-                    <a href="#" class="btn-link">Leer noticia</a>
-                </div>
-            </div>
-            <div class="news-card">
-                <div class="news-img"
-                    style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop');">
-                </div>
-                <div class="news-body">
-                    <span class="news-date">Dic 15, 2024</span>
-                    <h3>Nueva Biblioteca Escolar</h3>
-                    <p>Inauguramos un espacio renovado con más de 500 nuevos títulos.</p>
-                    <a href="#" class="btn-link">Leer noticia</a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-        <div class="text-center mt-4">
-            <a href="{{ url_for('main.news') }}" class="btn-primary">Ver todas las noticias</a>
+        <div class="text-center mt-5">
+            <a href="{{ url_for('main.news') }}" class="btn-outline">Ver todas las noticias</a>
         </div>
     </div>
-    <!-- Social Media CTA Section -->
-    <section class="social-cta-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Conecta con Nuestra Comunidad</h2>
-                <div class="underline"></div>
-                <p class="section-subtitle">Síguenos en nuestras redes sociales para estar al día con todas nuestras
-                    actividades.</p>
-            </div>
+</section>
 
-            <div class="social-cards-grid">
-                <!-- Facebook Card -->
-                <a href="https://www.facebook.com/people/Escuela-Aurora-de-Chile-de-Choroico/100069898585772/?locale=es_LA"
-                    target="_blank" class="social-card facebook">
-                    <div class="social-icon">
-                        <i class="fab fa-facebook-f"></i>
-                    </div>
-                    <div class="social-info">
-                        <h3>Facebook</h3>
-                        <p>Síguenos para noticias y eventos en vivo.</p>
-                        <span class="social-action">Ir al perfil <i class="fas fa-external-link-alt"></i></span>
-                    </div>
-                </a>
-
-                <!-- Instagram Card -->
-                <a href="https://www.instagram.com/escuela_auroradechile/" target="_blank"
-                    class="social-card instagram">
-                    <div class="social-icon">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                    <div class="social-info">
-                        <h3>Instagram</h3>
-                        <p>Mira nuestras mejores fotos y momentos.</p>
-                        <span class="social-action">Ir al perfil <i class="fas fa-external-link-alt"></i></span>
-                    </div>
-                </a>
-            </div>
+<!-- Social Media CTA Section -->
+<section class="social-cta-section bg-light">
+    <div class="container">
+        <div class="section-header">
+            <span class="pre-title">Comunidad Digital</span>
+            <h2>Conecta con Nosotros</h2>
+            <div class="underline"></div>
+            <p class="section-subtitle">Síguenos en nuestras redes sociales para estar al día con todas nuestras actividades cotidianas.</p>
         </div>
-    </section>
+
+        <div class="social-cards-grid">
+            <!-- Facebook Card -->
+            <a href="https://www.facebook.com/people/Escuela-Aurora-de-Chile-de-Choroico/100069898585772/?locale=es_LA"
+                target="_blank" class="social-card facebook">
+                <div class="social-icon">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-info">
+                    <h3>Facebook</h3>
+                    <p>Noticias y eventos en vivo de nuestra escuela.</p>
+                    <span class="social-action">Visitar página <i class="fas fa-external-link-alt"></i></span>
+                </div>
+            </a>
+
+            <!-- Instagram Card -->
+            <a href="https://www.instagram.com/escuela_auroradechile/" target="_blank"
+                class="social-card instagram">
+                <div class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="social-info">
+                    <h3>Instagram</h3>
+                    <p>Galería visual y momentos institucionales.</p>
+                    <span class="social-action">Ver perfil <i class="fas fa-external-link-alt"></i></span>
+                </div>
+            </a>
+        </div>
+    </div>
 </section>
 {% endblock %}

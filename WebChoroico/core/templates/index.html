@@ -8,7 +8,8 @@
     <div class="container hero-content">
         <div class="hero-badge">Establecimiento Educacional</div>
         <h1>Bienvenidos a la <br><span class="text-accent">Escuela Aurora de Chile</span></h1>
-        <p>Educación de calidad con valores, formando el futuro de nuestra comunidad en Choroico con compromiso y excelencia académica.</p>
+        <p>Educación de calidad con valores, formando el futuro de nuestra comunidad en Choroico con compromiso y
+            excelencia académica.</p>
         <div class="hero-btns">
             <a href="{{ url_for('main.about_us') }}" class="btn-primary">Conócenos</a>
             <a href="https://www.sistemadeadmisionescolar.cl/" class="btn-secondary" target="_blank">Admisión 2025</a>
@@ -31,7 +32,8 @@
                 </div>
                 <h3>Sistema de admisión</h3>
                 <p>Infórmate sobre el proceso oficial de postulación para el año académico.</p>
-                <a href="https://www.sistemadeadmisionescolar.cl/" class="btn-text" target="_blank">Postular aquí <i class="fas fa-arrow-right"></i></a>
+                <a href="https://www.sistemadeadmisionescolar.cl/" class="btn-text" target="_blank">Postular aquí <i
+                        class="fas fa-arrow-right"></i></a>
             </div>
             <div class="service-card">
                 <div class="service-icon-wrap">
@@ -39,23 +41,26 @@
                 </div>
                 <h3>Reglamento Interno</h3>
                 <p>Consulta las normativas vigentes y el Reglamento Interno 2025 de nuestra escuela.</p>
-                <a href="{{ url_for('static', filename='documents/REGLAMENTO INTERNO 2025 - ESCUELA AURORA DE CHILE .pdf') }}" class="btn-text" target="_blank">Descargar PDF <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ url_for('static', filename='documents/REGLAMENTO INTERNO 2025 - ESCUELA AURORA DE CHILE .pdf') }}"
+                    class="btn-text" target="_blank">Descargar PDF <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="service-card">
                 <div class="service-icon-wrap">
                     <i class="fas fa-book-reader"></i>
                 </div>
                 <h3>Material Educativo</h3>
-                <p>Accede a guías y materiales pedagógicos compartidos por nuestros docentes.</p>
-                <a href="#" class="btn-text">Acceder <i class="fas fa-arrow-right"></i></a>
+                <p>Accede a guías y materiales pedagógicos para todos los niveles.</p>
+                <a href="https://aprendoenlinea.mineduc.gob.cl/" class="btn-text">Acceder <i
+                        class="fas fa-arrow-right"></i></a>
             </div>
             <div class="service-card">
                 <div class="service-icon-wrap">
                     <i class="fas fa-calendar-alt"></i>
                 </div>
                 <h3>Calendario Escolar</h3>
-                <p>Revisa las fechas clave, vacaciones y eventos institucionales del año.</p>
-                <a href="#" class="btn-text">Ver fechas <i class="fas fa-arrow-right"></i></a>
+                <p>Revisa las fechas clave del calendario escolar oficial de la region de la Araucania.</p>
+                <a href="https://araucania.mineduc.cl/wp-content/uploads/sites/13/2025/12/CER-2026_araucania.pdf"
+                    class="btn-text">Ver fechas <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </div>
@@ -73,15 +78,18 @@
             {% for item in news[:3] %}
             <article class="news-card">
                 <div class="news-card-image">
-                    <img src="{{ item.image_url or url_for('static', filename='img/placeholder.jpg') }}" alt="{{ item.title }}">
+                    <img src="{{ item.image_url or url_for('static', filename='img/placeholder.jpg') }}"
+                        alt="{{ item.title }}">
                 </div>
                 <div class="news-card-content">
                     <div class="meta-info">
-                        <span><i class="far fa-calendar-alt"></i> {{ item.created_at[:10] if item.created_at else 'Reciente' }}</span>
+                        <span><i class="far fa-calendar-alt"></i> {{ item.created_at[:10] if item.created_at else
+                            'Reciente' }}</span>
                     </div>
                     <h3>{{ item.title }}</h3>
                     <p>{{ item.content[:100] }}...</p>
-                    <a href="{{ url_for('main.news_detail', news_id=item.id) }}" class="btn-link">Leer más <i class="fas fa-arrow-right"></i></a>
+                    <a href="{{ url_for('main.news_detail', news_id=item.id) }}" class="btn-link">Leer más <i
+                            class="fas fa-arrow-right"></i></a>
                 </div>
             </article>
             {% else %}
@@ -103,7 +111,8 @@
             <span class="pre-title">Comunidad Digital</span>
             <h2>Conecta con Nosotros</h2>
             <div class="underline"></div>
-            <p class="section-subtitle">Síguenos en nuestras redes sociales para estar al día con todas nuestras actividades cotidianas.</p>
+            <p class="section-subtitle">Síguenos en nuestras redes sociales para estar al día con todas nuestras
+                actividades cotidianas.</p>
         </div>
 
         <div class="social-cards-grid">
@@ -121,8 +130,7 @@
             </a>
 
             <!-- Instagram Card -->
-            <a href="https://www.instagram.com/escuela_auroradechile/" target="_blank"
-                class="social-card instagram">
+            <a href="https://www.instagram.com/escuela_auroradechile/" target="_blank" class="social-card instagram">
                 <div class="social-icon">
                     <i class="fab fa-instagram"></i>
                 </div>

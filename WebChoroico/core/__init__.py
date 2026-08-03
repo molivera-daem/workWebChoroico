@@ -4,6 +4,7 @@
 @author Miguel Olivera Labrin
 """
 
+# pyrefly: ignore [missing-import]
 from flask import Flask
 from config import Config
 
